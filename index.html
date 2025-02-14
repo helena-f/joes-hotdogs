@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joe's Hotdog Stand</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #d9534f;
+            text-align: center;
+        }
+        h2 {
+            color: #5bc0de;
+        }
+        .order-summary {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .item {
+            margin: 5px 0;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Joe's Hotdog Stand!</h1>
+    <div class="order-summary">
+        <script>
+            // Constants for item prices
+            const PRICE_HOTDOG = 4.99;
+            const PRICE_FRIES = 3.99;
+            const PRICE_SODA = 1.79;
+
+            // Prompt user for quantities and handle NaN cases
+            let numDogs = parseInt(prompt("How many hotdogs do you want?"), 10) || 0;
+            let numFries = parseInt(prompt("How many fries do you want?"), 10) || 0;
+            let numSoda = parseInt(prompt("How many sodas do you want?"), 10) || 0;
+
+            // Function to format money
+            function showMoney(amount) {
+                let rounded = Math.round(amount * 100) / 100; // Round to 2 decimal places
+                let parts = rounded.toString().split(".");
+                if (parts.length < 2) {
+                    return parts[0] + ".00"; // Ensure two decimal places
+                }
+                return parts[0] + "." + (parts[1] + "00").slice(0, 2); // Ensure two decimal places
+            }
+
+            // Calculate subtotal
+            let subtotal = (numDogs * PRICE_HOTDOG) + (numFries * PRICE_FRIES) + (numSoda * PRICE_SODA);
+            let discount = 0;
+
+            // Apply discount if applicable
+            if (subtotal >= 30) {
+                discount = subtotal * 0.10; // 10% discount
+                subtotal -= discount;
+            }
+
+            // Calculate tax
+            const TAX_RATE = 0.0625;
+            let tax = subtotal * TAX_RATE;
+
+            // Final total
+            let finalTotal = subtotal + tax;
+
+            // Display order information
+            document.write("<h2>Your Order Summary</h2>");
+            document.write("<div class='item'>Hotdogs: " + numDogs + " x $" + showMoney(PRICE_HOTDOG) + " = $" + showMoney(numDogs * PRICE_HOTDOG) + "</div>");
+            document.write("<div class='item'>Fries: " + numFries + " x $" + showMoney(PRICE_FRIES) + " = $" + showMoney(numFries * PRICE_FRIES) + "</div>");
+            document.write("<div class='item'>Sodas: " + numSoda + " x $" + showMoney(PRICE_SODA) + " = $" + showMoney(numSoda * PRICE_SODA) + "</div>");
+            document.write("<div class='item'>Subtotal before discount: $" + showMoney((numDogs * PRICE_HOTDOG) + (numFries * PRICE_FRIES) + (numSoda * PRICE_SODA)) + "</div>");
+            if (discount > 0) {
+                document.write("<div class='item'>Discount: -$" + showMoney(discount) + "</div>");
+            }
+            document.write("<div class='item'>Subtotal after discount: $" + showMoney(subtotal) + "</div>");
+            document.write("<div class='item'>Tax: $" + showMoney(tax) + "</div>");
+            document.write("<div class='total'>Final Total: $" + showMoney(finalTotal) + "</div>");
+        </script>
+    </div>
+</body>
+</html>
